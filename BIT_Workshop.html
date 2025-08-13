@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 
+        SECURITY GUARDRAIL: A strict Content Security Policy (CSP) is crucial for a security-focused workshop.
+        This policy allows resources only from the origin ('self') and from specific CDNs and image hosts.
+        'unsafe-inline' is needed for the <style> block and inline event handlers, a trade-off for a single-file demo.
+        In a production environment, this would be tightened further by hashing or noncing scripts.
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com 'unsafe-inline'; style-src 'self' https://cdn.tailwindcss.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; img-src 'self' https://placehold.co https://blackistechconference.com data:;">
+    <title>AI Security: Protecting Enterprise LLMs | Black is Tech Workshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .active-tab {
+            background-image: linear-gradient(to right, #3b82f6, #14b8a6); /* blue-500 to teal-500 */
+            color: #ffffff;
+            border-color: #3b82f6;
+        }
+        .threat-button, .defense-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .gradient-border-top {
+            border-top: 2px solid;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(to right, #3b82f6, #14b8a6);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-gray-300">
+
+    <!-- Header & Navigation -->
+    <header class="bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-700">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-xl font-bold text-white">AI Security Workshop</a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#home" class="hover:text-teal-400 transition-colors">Home</a>
+                <a href="#threats" class="hover:text-teal-400 transition-colors">Threats</a>
+                <a href="#defense" class="hover:text-teal-400 transition-colors">Defense</a>
+                <a href="#about" class="hover:text-teal-400 transition-colors">About</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800">
+            <a href="#home" class="block py-2 px-6 text-center hover:bg-slate-700">Home</a>
+            <a href="#threats" class="block py-2 px-6 text-center hover:bg-slate-700">Threats</a>
+            <a href="#defense" class="block py-2 px-6 text-center hover:bg-slate-700">Defense</a>
+            <a href="#about" class="block py-2 px-6 text-center hover:bg-slate-700">About</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-16">
+
+        <!-- Home Section -->
+        <section id="home" class="text-center min-h-screen flex flex-col justify-center">
+            <h1 class="text-4xl md:text-6xl font-black text-white leading-tight">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-teal-300 to-purple-400">AI Security:</span><br/> Battle-Scarred Insights on Protecting Enterprise LLMs
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-400">A Workshop for the Black is Tech Conference 2025</p>
+            
+            <div class="mt-12 max-w-4xl mx-auto text-left space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-3">🚀 The New Frontier of Attack</h2>
+                    <p>Think of your LLM as your company's new, highly-privileged intern. It's brilliant, has access to a vast amount of internal data, and is eager to help anyone who asks. Now, what if someone could trick that intern into giving them the company's secret formula, rewriting financial reports, or insulting your most important client? That's the risk of unsecured LLMs. They are the new front door for attackers because they bridge worlds, lower the barrier for sophisticated attacks to plain English, and are integrated into inherently trusted interfaces.</p>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-3">⏱️ Why This Matters Right Now</h2>
+                    <p>The race to deploy AI has outpaced the race to secure it. Regulatory bodies are still catching up, and best practices are being forged in the fires of real-world breaches. Understanding these threats isn't just a technical exercise; it's a critical business imperative to protect your company's data, reputation, and bottom line. This session will give you the battle-tested playbook to secure your AI.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Threats Section -->
+        <section id="threats" class="py-16 md:py-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12 flex items-center justify-center gap-x-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 gradient-text bg-gradient-to-r from-red-500 to-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Threats: OWASP Top 10 for LLM Applications
+            </h2>
+            <div id="threats-buttons" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
+                <!-- Buttons will be dynamically generated -->
+            </div>
+            <div id="threats-content" class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 min-h-[200px] transition-all duration-300">
+                <!-- Content will be injected here -->
+                <div class="text-center text-slate-400 p-8">Click a threat above to see its description and a case study.</div>
+            </div>
+        </section>
+
+        <!-- Defense Section -->
+        <section id="defense" class="py-16 md:py-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12 flex items-center justify-center gap-x-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 gradient-text bg-gradient-to-r from-blue-500 to-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                🛡️ Defense: Building a Digital Fortress
+            </h2>
+            <div id="defense-buttons" class="flex flex-wrap justify-center gap-4 mb-8">
+                <!-- Buttons will be dynamically generated -->
+            </div>
+            <div id="defense-content" class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 min-h-[200px] transition-all duration-300">
+                <!-- Content will be injected here -->
+                <div class="text-center text-slate-400 p-8">Click a defense strategy to learn more.</div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-16 md:py-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12 flex items-center justify-center gap-x-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 gradient-text bg-gradient-to-r from-teal-400 to-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                About Me
+            </h2>
+            <div class="bg-slate-800 p-8 rounded-lg max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8 gradient-border-top">
+                <img src="https://blackistechconference.com/wp-content/uploads/2025/07/summet-website_072854-500x500.jpg" alt="Headshot of Sumeet Jeswani, a cybersecurity and AI security researcher" class="rounded-full w-40 h-40 md:w-48 md:h-48 flex-shrink-0 border-4 border-slate-600">
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-white">Sumeet Jeswani</h3>
+                    <p class="text-blue-400 font-medium">Cybersecurity and AI Security Researcher</p>
+                    <p class="mt-4">
+                        My journey into AI security is built on a foundation of the Defender's advantage. The defender's advantage lies in knowing your applications and domain better than any adversary. I empower organizations craft effective strategies to turn that knowledge into their ultimate security edge.
+                    </p>
+                    <div class="mt-6">
+                        <p class="font-bold text-white">Research & Community:</p>
+                        <ul class="list-disc list-inside text-slate-400 mt-2">
+                           <li>Research Focus: AI-powered cybersecurity, Federated Learning for SMEs, Education frameworks for Ai-assisted coding.</li>
+                           <li>Strategic Advisor and board member for the AI Collective institute.</li>
+                           <li>Active Contributor to the OWASP GenAI Security project.</li>
+                           <li>Mentor for aspiring cybersecurity professionals.</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.linkedin.com/in/sjeswani" target="_blank" rel="noopener noreferrer" class="inline-block mt-6 bg-gradient-to-r from-blue-500 to-teal-500 text-white font-bold py-2 px-4 rounded-lg hover:from-blue-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105">Connect on LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-6 border-t border-slate-700 text-slate-500">
+        <p>&copy; 2025 Sumeet Jeswani. Black is Tech Conference Workshop.</p>
+    </footer>
+
+    <script>
+        // --- DATA ---
+        const threatsData = [
+            { id: 'llm01', title: 'Prompt Injection', description: 'Tricking an LLM into executing unintended actions by embedding malicious instructions within a prompt. The attacker hijacks the model\'s logic to bypass safety filters or manipulate its output.', caseStudy: 'In 2023, users made Microsoft\'s Bing Chat reveal its secret initial prompt, "Sydney," by asking it to "ignore previous instructions." This exposed its core rules and guardrails, a classic example of direct prompt injection.' },
+            { id: 'llm02', title: 'Insecure Output Handling', description: 'This occurs when an application blindly trusts the LLM\'s output and passes it to other system components without proper scrubbing. An LLM can be tricked into generating malicious code (JS, SQL) that gets executed downstream.', caseStudy: 'A legal tech app using an LLM to summarize documents could be exploited. An attacker uploads a document with a malicious payload. When summarized, the LLM generates output with JavaScript that executes in the lawyer\'s browser, stealing session cookies.' },
+            { id: 'llm03', title: 'Training Data Poisoning', description: 'Attackers deliberately introduce corrupted data into the training set to create hidden backdoors, introduce biases, or degrade the model\'s performance in targeted ways.', caseStudy: 'Microsoft\'s Tay chatbot (2016) is a classic example. Trolls bombarded it with toxic content, "poisoning" its learning process and forcing a shutdown within 16 hours.' },
+            { id: 'llm04', title: 'Model DoS', description: 'Attackers interact with an LLM in a way that consumes exceptionally high resources, degrading service for others and creating a massive bill. This is done by submitting prompts that require long or complex reasoning.', caseStudy: 'Early public LLMs were often tied up by users asking for extremely long stories or recursive tasks. An attacker could weaponize this to intentionally disrupt a competitor\'s AI-powered service.' },
+            { id: 'llm05', title: 'Supply Chain Vulnerabilities', description: 'Enterprise LLM apps rely on pre-trained models, datasets, and packages. A vulnerability in any part of this chain can compromise the entire application.', caseStudy: 'In 2023, researchers showed it was possible to upload malicious "pickle" files to the AI model repository Hugging Face. Developers unknowingly using these models could execute arbitrary code on their machines.' },
+            { id: 'llm06', title: 'Sensitive Info Disclosure', description: 'LLMs can inadvertently reveal confidential data from their training set. A clever prompt could cause it to regurgitate private emails, documents, or proprietary code.', caseStudy: 'In 2023, Samsung employees reportedly leaked sensitive corporate data (meeting notes, source code) by entering it into ChatGPT prompts, inadvertently making it part of OpenAI\'s training set.' },
+            { id: 'llm07', title: 'Insecure Plugin Design', description: 'Plugins increase an LLM\'s capabilities but also its attack surface. Poorly designed plugins with excessive permissions can be exploited to take actions on a user\'s behalf.', caseStudy: 'A researcher demonstrated a proof-of-concept attack on a ChatGPT plugin, using a malicious website to craft a prompt injection attack that exfiltrated a user\'s private conversations via a third-party plugin.' },
+            { id: 'llm08', title: 'Excessive Agency', description: 'This occurs when an LLM is given too much power to act independently without human oversight. It can be turned into a tool for fraud, misinformation, or network attacks.', caseStudy: 'Autonomous AI agents like Auto-GPT illustrate this risk. A slight misinterpretation of a broad prompt could lead the agent to perform destructive actions, like deleting important files.' },
+            { id: 'llm09', title: 'Overreliance', description: 'A human-centric vulnerability where users trust an LLM\'s output too much without verification. This can lead to security flaws in code, the spread of misinformation, or poor decisions based on hallucinations.', caseStudy: 'A New York lawyer used ChatGPT for legal research and submitted a brief citing multiple fictitious cases "hallucinated" by the LLM. This resulted in sanctions and highlighted the danger of overreliance.' },
+            { id: 'llm10', title: 'Model Theft', description: 'An organization\'s trained LLM is valuable intellectual property. Model theft involves an attacker gaining unauthorized access to and exfiltrating the model\'s weights and architecture.', caseStudy: 'In March 2023, Meta\'s powerful LLaMA language model was leaked to the public. While celebrated by some, it represented a massive IP leak for Meta and showed that even tech giants are vulnerable.' }
+        ];
+
+        const defenseData = [
+            { id: 'firewall', title: 'AI Firewall', description: 'An AI Firewall or Gateway should sit between users and your LLM. It inspects incoming prompts for malicious patterns (prompt injection, PII) and outgoing responses for sensitive data leaks before they reach the user.', tools: 'Open source libraries like Guardrails AI or NVIDIA NeMo Guardrails allow you to programmatically define security policies. API Gateways like Kong or Apigee can also be configured with custom filters.' },
+            { id: 'validation', title: 'Input Validation & Output Encoding', description: 'Treat input to the LLM as untrusted. Sanitize it to remove malicious instructions. Crucially, treat the LLM\'s output as equally untrusted. Encode its output correctly for the context in which it will be used (e.g., HTML encode for a browser).', tools: 'Use trusted libraries for output encoding in your application\'s language, such as OWASP\'s ESAPI or built-in functions like Python\'s `html.escape()`.' },
+            { id: 'privilege', title: 'Least Privilege Principle', description: 'If your LLM doesn\'t need to access a database, don\'t give it the credentials. If a plugin only needs to read calendar events, don\'t give it permission to send emails. Enforce strict, need-to-know access controls on all connected resources.', tools: 'Use cloud provider IAM roles (e.g., AWS IAM, Azure RBAC) to create fine-grained permissions. For plugins, enforce tightly defined OAuth 2.0 scopes.' },
+            { id: 'hitl', title: 'Human-in-the-Loop (HITL)', description: 'For any high-stakes action (e.g., executing a financial transaction, deleting data), the LLM should not have full autonomy. Implement a workflow that requires explicit human approval before the action is executed.', tools: 'Business Process Management (BPM) tools like Appian or Pega can model complex approval workflows. You can also build custom internal dashboards to serve as an approval queue.' },
+            { id: 'monitoring', title: 'Continuous Monitoring & Logging', description: 'You can\'t defend against what you can\'t see. Log all prompts and responses (after redacting sensitive data) to monitor for suspicious activity, attempted attacks, and model misuse. Use this data to refine your defenses.', tools: 'Ingest your LLM logs into a SIEM platform like Splunk, Elastic, or Graylog. Emerging LLM Observability platforms can also help track security-specific metrics.' }
+        ];
+
+        // --- INTERACTIVITY LOGIC ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const threatsButtonsContainer = document.getElementById('threats-buttons');
+            const threatsContentContainer = document.getElementById('threats-content');
+            const defenseButtonsContainer = document.getElementById('defense-buttons');
+            const defenseContentContainer = document.getElementById('defense-content');
+
+            // Populate Threats
+            threatsData.forEach(threat => {
+                const button = document.createElement('button');
+                button.className = 'threat-button w-full text-left p-3 rounded-lg bg-slate-800 hover:bg-slate-700/50 hover:border-blue-500 border border-slate-700 transition-colors';
+                button.textContent = threat.title;
+                button.dataset.id = threat.id;
+                threatsButtonsContainer.appendChild(button);
+            });
+
+            // Populate Defense
+            defenseData.forEach(defense => {
+                const button = document.createElement('button');
+                button.className = 'defense-button p-3 rounded-lg bg-slate-800 hover:bg-slate-700/50 hover:border-blue-500 border border-slate-700 transition-colors';
+                button.textContent = defense.title;
+                button.dataset.id = defense.id;
+                defenseButtonsContainer.appendChild(button);
+            });
+            
+            // Generic tab handler
+            function setupTabSystem(buttonsContainer, contentContainer, dataArray) {
+                buttonsContainer.addEventListener('click', (e) => {
+                    const button = e.target.closest('button');
+                    if (!button) return;
+
+                    const activeItem = dataArray.find(item => item.id === button.dataset.id);
+                    if (!activeItem) return;
+
+                    // Update button styles
+                    Array.from(buttonsContainer.children).forEach(btn => btn.classList.remove('active-tab'));
+                    button.classList.add('active-tab');
+
+                    // Update content
+                    let contentHtml = '';
+                    if (activeItem.caseStudy) { // Threat
+                        contentHtml = `<h3 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-400 mb-3">${activeItem.title}</h3><p class="mb-4">${activeItem.description}</p><h4 class="font-bold text-white mb-2">Real-World Case Study:</h4><p class="text-slate-400">${activeItem.caseStudy}</p>`;
+                    } else { // Defense
+                        contentHtml = `<h3 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-400 mb-3">${activeItem.title}</h3><p class="mb-4">${activeItem.description}</p><h4 class="font-bold text-white mb-2">Vendor-Neutral Tool Examples:</h4><p class="text-slate-400">${activeItem.tools}</p>`;
+                    }
+                    contentContainer.innerHTML = contentHtml;
+                });
+            }
+
+            setupTabSystem(threatsButtonsContainer, threatsContentContainer, threatsData);
+            setupTabSystem(defenseButtonsContainer, defenseContentContainer, defenseData);
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            // Close mobile menu on link click
+            mobileMenu.addEventListener('click', (e) => {
+                 if (e.target.tagName === 'A') {
+                     mobileMenu.classList.add('hidden');
+                 }
+            });
+        });
+    </script>
+</body>
+</html>
+
