@@ -177,7 +177,7 @@
                 description: 'This vulnerability occurs when an application blindly trusts the LLM\'s output without proper validation or sanitization. An attacker can trick the LLM into generating malicious code, which is then executed by the downstream application.',
                 caseStudy: 'Imagine an internal legal tool that uses an LLM to summarize case files. An attacker could upload a PDF with a hidden prompt that, when summarized, produces an output containing malicious JavaScript. If the application displays this output without proper encoding, the script could execute in an employee\'s browser, stealing session cookies or sensitive data.',
                 attackTechniques: [
-                    '**Cross-Site Scripting (XSS):** The LLM generates output with `<script>` tags that execute on a user’s browser.',
+                    '**Cross-Site Scripting (XSS):** The LLM is manipulated to produce an output containing malicious JavaScript, which is then rendered by a user\'s browser, leading to session hijacking or data theft.',
                     '**SQL Injection:** The LLM generates malicious SQL commands that the downstream application sends to a database.',
                     '**Server-Side Request Forgery (SSRF):** The LLM is tricked into generating an output that forces a server to make unauthorized requests to internal network resources.'
                 ]
